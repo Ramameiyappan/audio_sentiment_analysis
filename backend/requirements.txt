@@ -1,9 +1,9 @@
 flask
 flask-cors
 --index-url https://download.pytorch.org/whl/cpu
-torch
-torchaudio
---index-url https://pypi.org/simple
+torch==2.2.1
+torchaudio==2.2.1
+--extra-index-url https://pypi.org/simple
 transformers
 librosa
 soundfile
