@@ -3,7 +3,7 @@ import requests
 import pandas as pd
 import html
 
-BACKEND_URL = "http://audiosentimentanalysis-production.up.railway.app/analyze"
+BACKEND_URL = "https://audiosentimentanalysis-production.up.railway.app/analyze"
 
 st.set_page_config(
     page_title="Emotion Analysis Dashboard",
