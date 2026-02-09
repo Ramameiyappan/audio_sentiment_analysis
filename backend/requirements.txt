@@ -1,0 +1,9 @@
+flask
+flask-cors
+torch
+torchaudio
+transformers
+librosa
+soundfile
+openai-whisper
+numpy
