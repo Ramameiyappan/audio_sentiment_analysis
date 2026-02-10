@@ -25,16 +25,26 @@ def analyze():
         return jsonify({"error": "No audio file"}), 400
 
     file = request.files["audio"]
+    audio_path = None
 
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
-        file.save(tmp.name)
-        audio_path = tmp.name
+    try:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as tmp:
+            file.save(tmp.name)
+            audio_path = tmp.name
 
-    timeline = run_pipeline(audio_path, models)
+        timeline = run_pipeline(audio_path, models)
 
-    return jsonify({
-        "timeline": timeline
-    })
+        return jsonify({
+            "timeline": timeline
+        })
+
+    except Exception as e:
+        print(f"Error during analysis: {e}")
+        return jsonify({"error": str(e)}), 500
+    
+    finally:
+        if audio_path and os.path.exists(audio_path):
+            os.remove(audio_path)
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
