@@ -4,11 +4,20 @@ from flask_cors import CORS
 from models import load_models
 from emotion_pipeline import run_pipeline
 import os
+import subprocess
 
 app = Flask(__name__)
 CORS(app)
 
 models = load_models()
+
+@app.route("/health", methods=["GET"])
+def health():
+    try:
+        res = subprocess.run(["ffmpeg", "-version"], capture_output=True, text=True)
+        return jsonify({"status": "ready", "ffmpeg": res.stdout.split('\n')[0]})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 @app.route("/analyze", methods=["POST"])
 def analyze():
